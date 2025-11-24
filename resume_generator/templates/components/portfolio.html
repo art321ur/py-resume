@@ -1,0 +1,28 @@
+{% if resume.portfolio %}
+<div class="container">
+    <div class="title">
+        <h3>{{ icons.portfolio|safe }} Portfolio</h3>
+        <div class="keyline"></div>
+    </div>
+    <div class="portfolio-list">
+        {% for project in resume.portfolio %}
+        <div class="portfolio-item">
+            <h4 class="bold">
+                {% if project.url %}
+                <a href="{{ project.url }}">{{ project.name }}</a>
+                {% else %}
+                {{ project.name }}
+                {% endif %}
+            </h4>
+            {% if project.description %}
+            <div class="markdown-body">
+{% markdown %}
+{{ project.description }}
+{% endmarkdown %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

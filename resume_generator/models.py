@@ -94,6 +94,13 @@ class Interest(BaseModel):
     keywords: Optional[List[str]] = None
 
 
+class PortfolioItem(BaseModel):
+    """Portfolio entry supporting Markdown descriptions."""
+    name: str
+    description: Optional[str] = None
+    url: Optional[str] = None
+
+
 class Resume(BaseModel):
     """Complete resume schema."""
     basics: Basics
@@ -106,3 +113,4 @@ class Resume(BaseModel):
     awards: Optional[List[dict]] = None
     publications: Optional[List[dict]] = None
     references: Optional[List[dict]] = None
+    portfolio: Optional[List[PortfolioItem]] = None
