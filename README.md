@@ -136,6 +136,13 @@ The resume follows the [JSON Resume](https://jsonresume.org/) schema, adjusted a
       "rating": 5
     }
   ],
+  "portfolio": [
+    {
+      "name": "Python Resume Generator",
+      "description": "Render **Markdown** blurbs with links.",
+      "url": "https://github.com/art321ur/py-resume"
+    }
+  ],
   "interests": [
     {
       "name": "Software Development"

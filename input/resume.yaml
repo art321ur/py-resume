@@ -30,9 +30,11 @@ work:
   highlights:
   - Designed and implemented both backend and frontend for a new internal tool
   - Prepared CICD pipeline and deployment infrastructure based on docker and kubernetes
-  - Developed complex UI for scientific data management in grid format
+  - Developed complex UI for scientific data management in grid format ("painting grid with data")
   - Implemented integration with other internal systems via REST API and SSH CLI
-  - Developed scientific apps for Spotfire business intelligence tool using C#.
+  - Developed scientific apps for Spotfire business intelligence tool using C#
+  - Designed and developed a game-changing solution to greatly simplify the process of deploying Spotfire workflow data functions (python/R) for data scientists
+  - Migrated legacy on-premise and azure-cloud solutions to Google Cloud Platform infrastructure
   additional:
   - title: Backend
     tech:
@@ -46,12 +48,15 @@ work:
     - React
     - Redux Toolkit
     - Typescript
+    - jinja2
   - title: CICD and infrastructure
     tech:
-    - Azure cloud and GCP
+    - Azure 
+    - GCP
     - Docker
     - Kubernetes
-    - Azure Devops Pipelines
+    - GH Actions
+    - Azure Devops
 - name: Transition Technologies Advanced Solutions
   position: Software Project Engineer
   website: https://www.ttas.pl/
@@ -103,7 +108,7 @@ skills:
   rating: 5
 - category: Programming languages
   name: JavaScript/Typescript
-  rating: 5
+  rating: 4
 - category: Programming languages
   name: C#
   rating: 4
@@ -115,10 +120,10 @@ skills:
   rating: 5
 - category: SQL and DBs
   name: Clickhouse
-  rating: 4
+  rating: 3
 - category: SQL and DBs
   name: Redis
-  rating: 4
+  rating: 3
 - category: Frameworks
   name: Django
 - category: Frameworks
@@ -140,7 +145,7 @@ skills:
 - category: CI/CD and infrastructure
   name: Github Actions
 - category: CI/CD and infrastructure
-  name: Linux (CentOS, OpenSUSE)
+  name: Linux (CentOS, Ubuntu)
 - category: CI/CD and infrastructure
   name: Networking (basic FWs, routing etc)
 - category: Other
@@ -152,6 +157,12 @@ languages:
   rating: 5
 - language: English
   rating: 4
+portfolio:
+  - name: Python Resume Generator
+    description: |
+      A Python tool to generate resumes in HTML and PDF formats from YAML/ JSON input.
+      **The resume that you are currently viewing was generated using this tool.**
+    url: https://github.com/art321ur/py-resume
 interests:
 - name: Podcasts
   keywords: []

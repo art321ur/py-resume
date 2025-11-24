@@ -5,3 +5,8 @@ work:
 - name: Acme Corp
   position: Developer
   startDate: 2024-01
+portfolio:
+  - name: Sample Project
+    description: |
+      Built **cool** things with Markdown support.
+    url: https://example.com/project
