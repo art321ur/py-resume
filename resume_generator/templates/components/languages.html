@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="title">
+        <h3>Languages</h3>
+        <div class="keyline"></div>
+    </div>
+    {% for language in resume.languages or [] %}
+    <div class="skill">
+        <span>{{ language.language }}</span>
+        {% if language.rating %}
+        {% set rating = language.rating | int %}
+        {% set empty = 5 - rating if rating < 5 else 0 %}
+        <div class="circles">
+            {% for _ in range(rating) %}
+            <div class="full-circle"></div>
+            {% endfor %}
+            {% for _ in range(empty) %}
+            <div class="empty-circle"></div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>

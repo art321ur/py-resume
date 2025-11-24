@@ -1,0 +1,13 @@
+{% if resume.interests %}
+<div class="container">
+    <div class="title">
+        <h3>{{ icons.hobbies|safe }} Hobbies</h3>
+        <div class="keyline"></div>
+    </div>
+    <div class="md-chip-container">
+        {% for hobby in resume.interests %}
+        <div class="md-chip">{{ hobby.name }}</div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

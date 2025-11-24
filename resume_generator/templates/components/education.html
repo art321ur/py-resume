@@ -1,0 +1,31 @@
+{% if resume.education %}
+<div class="container">
+    <div class="title">
+        <h3>{{ icons.education|safe }} Education</h3>
+        <div class="keyline"></div>
+    </div>
+    {% for school in resume.education %}
+    <div class="school">
+        <div class="section-header">
+            <h4 class="bold">{{ school.institution }}</h4>
+            <h5 class="italic">
+                {{ school.startDate }} - {{ school.endDate or "Present" }}
+                {% set duration = calc_years(school.startDate, school.endDate) %}
+                {% if duration %}
+                ({{ duration }} years)
+                {% endif %}
+            </h5>
+        </div>
+        {% if school.studyType %}
+        <h4>{{ school.studyType }}</h4>
+        {% endif %}
+        {% if school.area %}
+        <h5>{{ school.area }}</h5>
+        {% endif %}
+        {% if school.specialization %}
+        <p>{{ school.specialization }}</p>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}

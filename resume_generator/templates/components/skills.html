@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="title">
+        <h3>Skills</h3>
+        <div class="keyline"></div>
+    </div>
+    {% set skill_groups = {} %}
+    {% for skill in resume.skills or [] %}
+        {% set category = skill.category or "Other" %}
+        {% if category not in skill_groups %}
+            {% set _ = skill_groups.update({category: []}) %}
+        {% endif %}
+        {% set _ = skill_groups[category].append(skill) %}
+    {% endfor %}
+
+    {% for category, skills in skill_groups.items() %}
+    <div class="skill-group">
+        <div class="skill-subtitle bold">{{ category }}</div>
+        {% for skill in skills %}
+        <div class="skill">
+            <span>{{ skill.name }}</span>
+            {% if skill.rating %}
+            {% set rating = skill.rating | int %}
+            {% set empty = 5 - rating if rating < 5 else 0 %}
+            <div class="circles">
+                {% for _ in range(rating) %}
+                <div class="full-circle"></div>
+                {% endfor %}
+                {% for _ in range(empty) %}
+                <div class="empty-circle"></div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>

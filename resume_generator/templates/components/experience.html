@@ -1,0 +1,45 @@
+{% if resume.work %}
+<div class="container">
+    <div class="title">
+        <h3>{{ icons.experience|safe }} Experience</h3>
+        <div class="keyline"></div>
+    </div>
+    {% for job in resume.work %}
+    <div class="job">
+        <div class="section-header">
+            <h4 class="bold">{{ job.name }}</h4>
+            <h5 class="italic">
+                {{ job.startDate }} - {{ job.endDate or "Present" }}
+                {% set duration = calc_years(job.startDate, job.endDate) %}
+                {% if duration %}
+                ({{ duration }} years)
+                {% endif %}
+            </h5>
+        </div>
+        {% if job.position %}
+        <h4>{{ job.position }}</h4>
+        {% endif %}
+        {% if job.summary %}
+        <p>{{ job.summary }}</p>
+        {% endif %}
+        {% if job.highlights %}
+        <ul>
+            {% for highlight in job.highlights %}
+            <li>{{ highlight }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% if job.additional %}
+            {% for item in job.additional %}
+            <div class="md-chip-container">
+                <span>{{ item.title }}</span>:
+                {% for tech in item.tech %}
+                <span class="md-chip">{{ tech }}</span>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}

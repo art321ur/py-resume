@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="title">
+        <h3>About</h3>
+        <div class="keyline"></div>
+    </div>
+    {% if resume.basics.location and resume.basics.location.city %}
+    <div>
+        <span>{{ icons.location|safe }} {{ resume.basics.location.city }}</span>
+    </div>
+    {% endif %}
+    {% if resume.basics.email %}
+    <div>
+        <span>{{ icons.email|safe }} {{ resume.basics.email }}</span>
+    </div>
+    {% endif %}
+    {% if resume.basics.phone %}
+    <div>
+        <span>{{ icons.phone|safe }} {{ resume.basics.phone }}</span>
+    </div>
+    {% endif %}
+    {% for profile in resume.basics.profiles or [] %}
+    <div>
+        <span>{{ icons.linkedin|safe }} <a href="{{ profile.url }}">{{ profile.username or resume.basics.name }}</a></span>
+    </div>
+    {% endfor %}
+</div>

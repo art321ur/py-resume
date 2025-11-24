@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <title>{{ resume.basics.name }} - Resume</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        {{ css_content | safe }}
+    </style>
+</head>
+<body class="A4">
+    <div class="page sheet">
+        <div class="cv-header">
+            <h1>{{ resume.basics.name }}</h1>
+            <div class="profile-pic"><img src="{{ picture_url }}" alt="{{ resume.basics.name }}"></div>
+        </div>
+        <div class="content">
+            <div class="l-bar">
+                {% include 'components/about.html' %}
+                {% include 'components/skills.html' %}
+                {% include 'components/languages.html' %}
+            </div>
+            <div class="r-bar">
+                <div class="main-content">
+                    {% include 'components/summary.html' %}
+                    {% include 'components/experience.html' %}
+                    {% include 'components/education.html' %}
+                    {% include 'components/hobbies.html' %}
+                    <div class="cv-footer">
+                        I agree to the processing of personal data provided in this document
+                        for realising this and future recruitment processes pursuant to the
+                        Personal Data Protection Act of 10 May 2018 (Journal of Laws 2018,
+                        item 1000) and in agreement with Regulation (EU) 2016/679 of the
+                        European Parliament and of the Council of 27 April 2016 on the
+                        protection of natural persons with regard to the processing of
+                        personal data and on the free movement of such data, and repealing
+                        Directive 95/46/EC (General Data Protection Regulation).
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
