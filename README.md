@@ -14,27 +14,26 @@ uv install
 
 ### CLI
 
-Generate HTML resume from JSON file:
+Generate HTML resume from JSON or YAML file:
 
 ```bash
-python main.py input.json --output resume.html
+uv run main.py input/resume.yaml --output resume.html
 ```
 
 Or use the default output name:
 
 ```bash
-python main.py input.json
+uv run main.py input/resume.json
 ```
 
 ### Python API
 
 ```python
-from resume_generator import Resume, ResumeGenerator
-import json
+from pathlib import Path
+from resume_generator import Resume, ResumeGenerator, load_resume_data
 
-# Load resume data
-with open('resume.json', 'r') as f:
-    data = json.load(f)
+# Load resume data from either JSON or YAML
+data = load_resume_data(Path("input/resume.yaml"))
 
 # Create resume model
 resume = Resume(**data)

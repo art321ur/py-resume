@@ -1,16 +1,15 @@
 """CLI for resume generator."""
-import json
 from pathlib import Path
 from typing import Optional
 
 import cyclopts
 
 from resume_generator.generator import ResumeGenerator
-from resume_generator.models import Resume
+from resume_generator.loader import load_resume_model
 
 app = cyclopts.App(
     name="resume-generator",
-    help="Generate HTML resume from JSON resume data"
+    help="Generate HTML resume from JSON or YAML resume data"
 )
 
 
@@ -20,10 +19,10 @@ def generate(
     output_file: str = "resume.html",
     template_dir: Optional[str] = None
 ) -> None:
-    """Generate HTML resume from JSON file.
+    """Generate HTML resume from JSON/YAML file.
     
     Args:
-        input_file: Path to JSON resume file
+        input_file: Path to resume file (JSON or YAML)
         output_file: Path to output HTML file (default: resume.html)
         template_dir: Path to templates directory (optional)
     """
@@ -32,11 +31,7 @@ def generate(
     if not input_path.exists():
         raise FileNotFoundError(f"Resume file not found: {input_file}")
     
-    with open(input_path, 'r', encoding='utf-8') as f:
-        data = json.load(f)
-    
-    # Parse with Pydantic
-    resume = Resume(**data)
+    resume = load_resume_model(input_path)
     
     # Generate HTML
     generator = ResumeGenerator(template_dir=template_dir)

@@ -215,5 +215,9 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-output
-input
+output/
+input/
+!input/
+input/*
+!input/resume.json
+!input/resume.yaml
