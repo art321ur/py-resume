@@ -191,4 +191,4 @@ resume_generator/
 
 ## License
 
-MIT
+GPL 3
