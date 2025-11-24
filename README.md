@@ -18,7 +18,7 @@ Generate HTML resume from JSON or YAML file:
 
 ```bash
 uv run main.py generate input/resume.yaml --output output/resume.html \
-  --profile-photo input/profile.jpg
+  --profile-photo input/profile.jpg --force
 ```
 
 Or use the default output name:
@@ -27,16 +27,26 @@ Or use the default output name:
 uv run main.py generate input/resume.json
 ```
 
+> Commands now refuse to overwrite existing files unless you pass `--force`.
+
+To append a timestamp to the generated filenames, add `--file-date`.
+
 Convert an already-rendered HTML file to PDF (defaults to the same name with `.pdf`):
 
 ```bash
-uv run main.py pdf output/resume.html --output output/resume.pdf
+uv run main.py pdf output/resume.html --output output/resume.pdf --force
 ```
 
 Generate both HTML and PDF with matching names in one go:
 
 ```bash
-uv run main.py full input/resume.yaml --output output/resume.html
+uv run main.py full input/resume.yaml --output output/resume.html --force
+```
+
+Process every JSON/YAML resume in a directory (outputs stored in another directory):
+
+```bash
+uv run main.py full-many input/ output/ --file-date --force
 ```
 
 > `input/` is git-ignored so you can keep private resumes locally without committing them.
