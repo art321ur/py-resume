@@ -6,8 +6,11 @@ from typing import Optional
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from jinja_markdown import MarkdownExtension
 
-from .assets import (get_image_as_data_uri, get_placeholder_avatar_data_uri,
-                     get_svg_icons)
+from .assets import (
+    get_image_as_data_uri,
+    get_placeholder_avatar_data_uri,
+    get_svg_icons,
+)
 from .models import Resume
 
 

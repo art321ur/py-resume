@@ -121,6 +121,13 @@ The resume follows the [JSON Resume](https://jsonresume.org/) schema, adjusted a
 
 ## Development
 
+### Tooling
+
+- Lint: `uv run ruff check .`
+- Type check: `uv run ty check`
+- Tests: `uv run pytest`
+- Install hooks: `uv run pre-commit install`
+
 ### Project Structure
 
 ```

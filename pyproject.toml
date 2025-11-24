@@ -12,4 +12,16 @@ dependencies = [
     "jinja-markdown>=1.210911",
     "pytest>=9.0.1",
     "pyyaml>=6.0.3",
+    "ruff>=0.14.6",
+    "ty>=0.0.1a27",
+    "pre-commit>=4.5.0",
 ]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+per-file-ignores = {"resume_generator/assets.py" = ["E501"]}
+

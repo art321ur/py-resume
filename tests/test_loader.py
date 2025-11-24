@@ -2,15 +2,13 @@
 from __future__ import annotations
 
 from pathlib import Path
-import sys
-
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(PROJECT_ROOT))
 
 import pytest
 
 from resume_generator.loader import load_resume_data, load_resume_model
 from resume_generator.models import Resume
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SAMPLE_FILES = [
     PROJECT_ROOT / "input" / "resume.json",
     PROJECT_ROOT / "input" / "resume.yaml",
