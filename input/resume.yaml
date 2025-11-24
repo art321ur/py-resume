@@ -1,0 +1,161 @@
+basics:
+  name: Artur Kuźmiński
+  label: Programmer
+  picture: profile.jpg
+  email: artur.kuzminski3@gmail.com
+  phone: x+ 48 123 456 789
+  website: ''
+  summary: I am driven by opportunities to gain knowledge and explore new technologies.
+    Finding clever solutions to complex problems gives me great sense of accomplishment.
+    Professionally I worked on IT solutions for power industries and big pharma.
+  location:
+    address: ''
+    postalCode: 05-070
+    city: Warsaw
+    countryCode: PL
+    region: MZ
+  profiles:
+  - network: Linkedin
+    username: Artur Kuźmiński
+    url: https://www.linkedin.com/in/artur-kuźmiński-28a423153/
+work:
+- name: GSK
+  position: Developer
+  website: http://gsk.com
+  startDate: 2023-07
+  summary: I have built a full stack solution for internal team of R&D scientists.
+    I have cooperated closely with the business side to understand and implement complex
+    requirements related to pharmaceutical research.
+  highlights:
+  - Designed and implemented both backend and frontend for a new internal tool
+  - Prepared CICD pipeline and deployment infrastructure based on docker and kubernetes
+  - Developed complex UI for scientific data management in grid format
+  - Implemented integration with other internal systems via REST API and SSH CLI
+  - Developed scientific apps for Spotfire business intelligence tool using C#.
+  additional:
+  - title: Backend
+    tech:
+    - Python
+    - Django
+    - Celery
+    - PostgreSQL
+    - C#
+  - title: Frontend
+    tech:
+    - React
+    - Redux Toolkit
+    - Typescript
+  - title: CICD and infrastructure
+    tech:
+    - Azure cloud and GCP
+    - Docker
+    - Kubernetes
+    - Azure Devops Pipelines
+- name: Transition Technologies Advanced Solutions
+  position: Software Project Engineer
+  website: https://www.ttas.pl/
+  startDate: 2018-07
+  endDate: 2023-07
+  summary: I worked on software dedicated for power and water industry for customers
+    in the Middle East and South East Asia. We developed on-demand solutions for data
+    transfer, processing and visualization.
+  highlights:
+  - Direct contact with clients to gather requirements and present solutions
+  - On-site installation, Site Acceptance Tests and integration with other systems
+    via MODBUS, OPC, HTTP API
+  - Developed and implemented billing system for power plants in Jordan
+  - Developed data transfer and processing tool integrated with Building Management
+    Systems dedicated for office buildings
+  - Prepared a solution to safely move data from site to cloud via main-client one-way
+    database replication and transfer it to central analytical Clickhouse database
+  - Developed data management platform for power plant optimization system in Singapore
+  additional:
+  - title: Backend
+    tech:
+    - Python
+    - Django
+    - FastAPI
+    - MariaDB
+    - ClickHouse
+    - Redis
+  - title: CICD and infrastructure
+    tech:
+    - Digital Ocean Cloud
+    - On premise linux servers
+    - Github actions
+
+education:
+- institution: Warsaw University of Technology
+  area: Faculty of Power and Aeronautical Engineering
+  studyType: Bachelor and Master
+  location: Warsaw
+  specialization: Thermal Power Systems & Power Engineering
+  startDate: '2015'
+  endDate: '2020'
+  gpa: ''
+  courses: []
+awards: []
+publications: []
+skills:
+- category: Programming languages
+  name: Python
+  rating: 5
+- category: Programming languages
+  name: JavaScript/Typescript
+  rating: 5
+- category: Programming languages
+  name: C#
+  rating: 4
+- category: SQL and DBs
+  name: PostgreSQL
+  rating: 5
+- category: SQL and DBs
+  name: MariaDB/Mysql
+  rating: 5
+- category: SQL and DBs
+  name: Clickhouse
+  rating: 4
+- category: SQL and DBs
+  name: Redis
+  rating: 4
+- category: Frameworks
+  name: Django
+- category: Frameworks
+  name: FastAPI
+- category: Frameworks
+  name: React
+- category: Cloud
+  name: GCP Google Cloud Platform
+- category: Cloud
+  name: Azure
+- category: Cloud
+  name: Digital Ocean
+- category: Containers
+  name: Docker + Compose
+- category: Containers
+  name: Kubernetes
+- category: CI/CD and infrastructure
+  name: Azure DevOps Pipelines
+- category: CI/CD and infrastructure
+  name: Github Actions
+- category: CI/CD and infrastructure
+  name: Linux (CentOS, OpenSUSE)
+- category: CI/CD and infrastructure
+  name: Networking (basic FWs, routing etc)
+- category: Other
+  name: Playwright E2E testing
+- category: Other
+  name: Pytest
+languages:
+- language: Polish
+  rating: 5
+- language: English
+  rating: 4
+interests:
+- name: Podcasts
+  keywords: []
+- name: Board games
+  keywords: []
+- name: Audiobooks
+  keywords: []
+references: []
