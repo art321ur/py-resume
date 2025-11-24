@@ -6,11 +6,7 @@ from typing import Optional
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from jinja_markdown import MarkdownExtension
 
-from .assets import (
-    get_image_as_data_uri,
-    get_placeholder_avatar_data_uri,
-    get_svg_icons,
-)
+from .assets import get_image_as_data_uri, get_placeholder_avatar_data_uri, get_svg_icons
 from .models import Resume
 
 
@@ -43,19 +39,29 @@ def calculate_years(start_value: Optional[str], end_value: Optional[str]) -> Opt
 
 
 class ResumeGenerator:
-    """Generate HTML resume from JSON resume data."""
+    """Generate HTML resumes from JSON or YAML data."""
 
-    def __init__(self, template_dir: Optional[str] = None):
+    def __init__(
+        self,
+        template_dir: Optional[Path] = None,
+        profile_photo: Optional[Path] = None,
+    ) -> None:
         """Initialize the generator.
-        
+
         Args:
-            template_dir: Path to templates directory. Defaults to templates/ in package.
+            template_dir: Path to templates directory. Defaults to package templates.
+            profile_photo: Optional override path for the profile image.
         """
-        if template_dir is None:
-            template_dir = str(Path(__file__).parent / "templates")
-        
+
+        self.template_dir = (
+            Path(__file__).parent / "templates"
+            if template_dir is None
+            else Path(template_dir)
+        )
+        self.profile_photo = Path(profile_photo) if profile_photo else None
+
         self.env = Environment(
-            loader=FileSystemLoader(template_dir),
+            loader=FileSystemLoader(str(self.template_dir)),
             autoescape=select_autoescape(['html', 'xml']),
             extensions=[MarkdownExtension]
         )
@@ -89,14 +95,17 @@ class ResumeGenerator:
         # Process picture - try matching React's public/profile.jpg
         package_dir = Path(__file__).resolve().parent
         repo_root = package_dir.parent.parent
-        candidate_paths = [
+        candidate_paths = []
+        if self.profile_photo:
+            candidate_paths.append(self.profile_photo)
+        candidate_paths.extend([
             repo_root / "public" / "profile.jpg",
             Path.cwd() / "public" / "profile.jpg",
-        ]
+        ])
 
         picture_url = None
         for candidate in candidate_paths:
-            data_uri = get_image_as_data_uri(str(candidate))
+            data_uri = get_image_as_data_uri(candidate)
             if data_uri:
                 picture_url = data_uri
                 break
@@ -120,7 +129,7 @@ class ResumeGenerator:
 
         return html
 
-    def generate_html_file(self, resume: Resume, output_path: str) -> None:
+    def generate_html_file(self, resume: Resume, output_path: Path) -> None:
         """Generate HTML file from resume data.
         
         Args:
@@ -128,5 +137,6 @@ class ResumeGenerator:
             output_path: Path where to write the HTML file
         """
         html = self.generate_html(resume)
-        with open(output_path, 'w', encoding='utf-8') as f:
-            f.write(html)
+        output_path = Path(output_path)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(html, encoding='utf-8')

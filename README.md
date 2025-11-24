@@ -17,7 +17,8 @@ uv install
 Generate HTML resume from JSON or YAML file:
 
 ```bash
-uv run main.py input/resume.yaml --output resume.html
+uv run main.py input/resume.yaml --output output/resume.html \
+  --profile-photo input/profile.jpg
 ```
 
 Or use the default output name:
@@ -25,6 +26,8 @@ Or use the default output name:
 ```bash
 uv run main.py input/resume.json
 ```
+
+> `input/` is git-ignored so you can keep private resumes locally without committing them.
 
 ### Python API
 
@@ -39,7 +42,7 @@ data = load_resume_data(Path("input/resume.yaml"))
 resume = Resume(**data)
 
 # Generate HTML
-generator = ResumeGenerator()
+generator = ResumeGenerator(profile_photo=Path("input/profile.jpg"))
 html = generator.generate_html(resume)
 
 # Or save to file
@@ -127,6 +130,12 @@ The resume follows the [JSON Resume](https://jsonresume.org/) schema, adjusted a
 - Type check: `uv run ty check`
 - Tests: `uv run pytest`
 - Install hooks: `uv run pre-commit install`
+
+### Local helpers
+
+- Run HTML generation or checks via `local_tasks.ps1`:
+  - `pwsh ./local_tasks.ps1 -Task html`
+  - `pwsh ./local_tasks.ps1 -Task checks`
 
 ### Project Structure
 

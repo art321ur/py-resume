@@ -1,0 +1,7 @@
+basics:
+  name: Sample Person
+  label: Engineer
+work:
+- name: Acme Corp
+  position: Developer
+  startDate: 2024-01

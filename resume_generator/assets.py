@@ -1,10 +1,10 @@
 """Utilities for embedding assets."""
 import base64
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Union
 
 
-def get_image_as_data_uri(image_path: str) -> Optional[str]:
+def get_image_as_data_uri(image_path: Union[str, Path]) -> Optional[str]:
     """Convert image file to data URI.
     
     Args:

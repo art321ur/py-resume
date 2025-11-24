@@ -13,30 +13,35 @@ app = cyclopts.App(
 )
 
 
+
 @app.default
 def generate(
-    input_file: str,
-    output_file: str = "resume.html",
-    template_dir: Optional[str] = None
+    input_file: Path,
+    output_file: Path = Path("resume.html"),
+    template_dir: Optional[Path] = None,
+    profile_photo: Optional[Path] = None,
 ) -> None:
     """Generate HTML resume from JSON/YAML file.
-    
+
     Args:
         input_file: Path to resume file (JSON or YAML)
         output_file: Path to output HTML file (default: resume.html)
         template_dir: Path to templates directory (optional)
+        profile_photo: Optional override path for profile photo
     """
-    # Load resume data from JSON
+
     input_path = Path(input_file)
     if not input_path.exists():
         raise FileNotFoundError(f"Resume file not found: {input_file}")
-    
+
     resume = load_resume_model(input_path)
-    
-    # Generate HTML
-    generator = ResumeGenerator(template_dir=template_dir)
-    generator.generate_html_file(resume, output_file)
-    
+
+    generator = ResumeGenerator(
+        template_dir=template_dir,
+        profile_photo=profile_photo,
+    )
+    generator.generate_html_file(resume, Path(output_file))
+
     print(f"✓ Resume generated successfully: {output_file}")
 
 

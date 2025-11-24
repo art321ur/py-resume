@@ -10,8 +10,8 @@ from resume_generator.models import Resume
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SAMPLE_FILES = [
-    PROJECT_ROOT / "input" / "resume.json",
-    PROJECT_ROOT / "input" / "resume.yaml",
+    PROJECT_ROOT / "tests" / "data" / "resume.json",
+    PROJECT_ROOT / "tests" / "data" / "resume.yaml",
 ]
 
 
@@ -19,8 +19,8 @@ SAMPLE_FILES = [
 def test_load_resume_data_handles_json_and_yaml(sample_path: Path) -> None:
     data = load_resume_data(sample_path)
 
-    assert data["basics"]["name"] == "Artur Kuźmiński"
-    assert len(data["work"]) == 2
+    assert data["basics"]["name"] == "Sample Person"
+    assert len(data["work"]) == 1
 
 
 @pytest.mark.parametrize("sample_path", SAMPLE_FILES)
@@ -28,4 +28,4 @@ def test_load_resume_model_returns_resume_instance(sample_path: Path) -> None:
     resume = load_resume_model(sample_path)
 
     assert isinstance(resume, Resume)
-    assert resume.basics.name == "Artur Kuźmiński"
+    assert resume.basics.name == "Sample Person"
