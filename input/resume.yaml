@@ -22,7 +22,8 @@ work:
 - name: GSK
   position: Developer
   website: http://gsk.com
-  startDate: 2023-07
+  startDate: '2023'
+  endDate: '2026'
   summary: I have built a full stack solution for internal team of R&D scientists.
     I have cooperated closely with the business side to understand and implement complex
     requirements related to pharmaceutical research.
@@ -54,8 +55,8 @@ work:
 - name: Transition Technologies Advanced Solutions
   position: Software Project Engineer
   website: https://www.ttas.pl/
-  startDate: 2018-07
-  endDate: 2023-07
+  startDate: '2018'
+  endDate: '2023'
   summary: I worked on software dedicated for power and water industry for customers
     in the Middle East and South East Asia. We developed on-demand solutions for data
     transfer, processing and visualization.
