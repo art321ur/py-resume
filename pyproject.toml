@@ -10,4 +10,6 @@ dependencies = [
     "playwright>=1.56.0",
     "pydantic>=2.12.4",
     "jinja-markdown>=1.210911",
+    "pytest>=9.0.1",
+    "pyyaml>=6.0.3",
 ]

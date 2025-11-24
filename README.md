@@ -1,15 +1,8 @@
 # Resume Generator
-
+Personal project to automatically generate html/pdf resumes from json/yaml data files.
 Generate a beautiful, single-file HTML resume from a JSON resume file using Jinja2 templates.
 
-## Features
 
-- 📄 Generate single HTML file from JSON resume data
-- 🎨 Beautiful, print-ready design with inlined CSS
-- 🚀 No JavaScript required
-- 🔤 Embedded fonts (Lato, Josefin Sans, Roboto)
-- 📱 Responsive design for screen and print
-- ✨ Clean, semantic HTML output
 
 ## Installation
 
@@ -56,7 +49,7 @@ generator.generate_html_file(resume, 'resume.html')
 
 ## Resume JSON Format
 
-The resume follows the [JSON Resume](https://jsonresume.org/) schema. Example structure:
+The resume follows the [JSON Resume](https://jsonresume.org/) schema, adjusted as needed to my needs. Example structure:
 
 ```json
 {
