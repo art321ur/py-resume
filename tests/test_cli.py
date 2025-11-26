@@ -125,3 +125,8 @@ def test_full_many_processes_directory(
         "sample/202501010303/Sample_Person_CV.pdf",
         "sample/202501010404/Sample_Person_CV.pdf",
     ]
+
+
+def test_cv_basename_removes_polish_characters() -> None:
+    result = main._cv_basename("Artur Kuźmiński", fallback="fallback")
+    assert result == "Artur_Kuzminski_CV"
