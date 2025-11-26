@@ -1,4 +1,5 @@
 """CLI for resume generator."""
+import re
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -6,6 +7,7 @@ from typing import Optional
 
 from cyclopts import App, Parameter
 
+from resume_generator.archive import resolve_archive_dir, resolve_input_dir, resolve_output_dir
 from resume_generator.generator import ResumeGenerator
 from resume_generator.loader import load_resume_model
 from resume_generator.pdf import render_pdf_from_html_file
@@ -18,6 +20,10 @@ app = App(
 
 def _timestamp_suffix() -> str:
     return datetime.now().strftime("%Y%m%d_%H%M%S")
+
+
+def _dated_folder_name() -> str:
+    return datetime.now().strftime("%Y%m%d%H%M")
 
 
 def _with_timestamp(path: Path, timestamp: Optional[str]) -> Path:
@@ -47,6 +53,38 @@ def _ensure_exists(path: Path, description: str) -> Path:
     if not resolved.exists():
         raise FileNotFoundError(f"{description} not found: {resolved}")
     return resolved
+
+
+_NAME_SANITIZE = re.compile(r"[^A-Za-z0-9]+")
+
+
+def _clean_component(value: str, fallback: str) -> str:
+    cleaned = _NAME_SANITIZE.sub("_", value).strip("_")
+    return cleaned or fallback
+
+
+def _cv_basename(display_name: Optional[str], *, fallback: str) -> str:
+    if not display_name:
+        safe_fallback = _clean_component(fallback, "Resume")
+        return f"{safe_fallback}_CV"
+
+    tokens = [token for token in display_name.replace("_", " ").split() if token]
+    if not tokens:
+        safe_fallback = _clean_component(fallback, "Resume")
+        return f"{safe_fallback}_CV"
+
+    first = tokens[0]
+    last = tokens[-1] if len(tokens) > 1 else "CV"
+    safe_first = _clean_component(first, _clean_component(fallback, "Resume"))
+    safe_last = _clean_component(last, "CV")
+    return f"{safe_first}_{safe_last}_CV"
+
+
+def _relative_or_full(base: Path, target: Path) -> str:
+    try:
+        return str(target.relative_to(base))
+    except ValueError:
+        return str(target)
 
 
 @Parameter(name="*")
@@ -84,8 +122,9 @@ class FullOptions:
 @Parameter(name="*")
 @dataclass
 class FullManyOptions:
-    input_dir: Path
-    output_dir: Path
+    input_dir: Optional[Path] = None
+    output_dir: Optional[Path] = None
+    archive_dir: Optional[Path] = None
     template_dir: Optional[Path] = None
     profile_photo: Optional[Path] = None
     force: bool = False
@@ -174,14 +213,16 @@ def full(options: FullOptions) -> None:
 
 
 @app.command(name="full-many")
-def full_many(options: FullManyOptions) -> None:
+def full_many(options: FullManyOptions = FullManyOptions()) -> None:
     """Process every JSON/YAML resume in a directory to HTML and PDF outputs."""
 
-    input_dir = _ensure_exists(options.input_dir, "Input directory")
+    archive_dir = resolve_archive_dir(options.archive_dir)
+    input_dir = Path(options.input_dir) if options.input_dir else resolve_input_dir(archive_dir)
+    input_dir = _ensure_exists(input_dir, "Input directory")
     if not input_dir.is_dir():
         raise NotADirectoryError(f"Input directory is not a directory: {input_dir}")
 
-    output_dir = Path(options.output_dir)
+    output_dir = Path(options.output_dir) if options.output_dir else resolve_output_dir(archive_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
     candidates = []
@@ -210,11 +251,17 @@ def full_many(options: FullManyOptions) -> None:
     processed: list[tuple[Path, Path]] = []
     for resume_path in resume_files:
         resume = load_resume_model(resume_path)
-        file_timestamp = _timestamp_suffix() if options.file_date else None
-        html_candidate = output_dir / f"{resume_path.stem}.html"
+        dated_folder = _dated_folder_name()
+        target_dir = output_dir / resume_path.stem / dated_folder
+        target_dir.mkdir(parents=True, exist_ok=True)
+        base_name = _cv_basename(
+            resume.basics.name if resume.basics else None,
+            fallback=resume_path.stem,
+        )
+        html_candidate = target_dir / f"{base_name}.html"
         html_path = _prepare_output_path(
             html_candidate,
-            timestamp=file_timestamp,
+            timestamp=None,
             force=options.force,
         )
         generator.generate_html_file(resume, html_path)
@@ -230,7 +277,12 @@ def full_many(options: FullManyOptions) -> None:
 
     print(f"Processed {len(processed)} resume(s) into {output_dir}:")
     for html_path, pdf_path in processed:
-        print(f"  - {html_path.name} | {pdf_path.name}")
+        print(
+            "  - "
+            f"{_relative_or_full(output_dir, html_path)}"
+            " | "
+            f"{_relative_or_full(output_dir, pdf_path)}"
+        )
 
 
 @app.default

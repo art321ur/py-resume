@@ -96,8 +96,8 @@ def test_full_many_processes_directory(
 
     monkeypatch.setattr(main, "render_pdf_from_html_file", fake_render)
 
-    timestamps = iter(["20250101_030303", "20250101_040404"])
-    monkeypatch.setattr(main, "_timestamp_suffix", lambda: next(timestamps))
+    timestamps = iter(["202501010303", "202501010404"])
+    monkeypatch.setattr(main, "_dated_folder_name", lambda: next(timestamps))
 
     options = main.FullManyOptions(
         input_dir=input_dir,
@@ -105,13 +105,23 @@ def test_full_many_processes_directory(
         template_dir=None,
         profile_photo=None,
         force=False,
-        file_date=True,
+        file_date=False,
     )
 
     main.full_many(options)
 
-    html_outputs = sorted(p.name for p in output_dir.glob("*.html"))
-    pdf_outputs = sorted(p.name for p in output_dir.glob("*.pdf"))
+    html_outputs = sorted(
+        p.relative_to(output_dir).as_posix() for p in output_dir.glob("**/*.html")
+    )
+    pdf_outputs = sorted(
+        p.relative_to(output_dir).as_posix() for p in output_dir.glob("**/*.pdf")
+    )
 
-    assert html_outputs == ["sample_20250101_030303.html", "sample_20250101_040404.html"]
-    assert pdf_outputs == ["sample_20250101_030303.pdf", "sample_20250101_040404.pdf"]
+    assert html_outputs == [
+        "sample/202501010303/Sample_Person_CV.html",
+        "sample/202501010404/Sample_Person_CV.html",
+    ]
+    assert pdf_outputs == [
+        "sample/202501010303/Sample_Person_CV.pdf",
+        "sample/202501010404/Sample_Person_CV.pdf",
+    ]
