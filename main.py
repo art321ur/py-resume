@@ -1,5 +1,6 @@
 """CLI for resume generator."""
 import re
+import unicodedata
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -58,8 +59,14 @@ def _ensure_exists(path: Path, description: str) -> Path:
 _NAME_SANITIZE = re.compile(r"[^A-Za-z0-9]+")
 
 
+def _strip_accents(value: str) -> str:
+    """Return an ASCII-only string by removing any accented characters."""
+    normalized = unicodedata.normalize("NFKD", value)
+    return normalized.encode("ascii", "ignore").decode("ascii")
+
+
 def _clean_component(value: str, fallback: str) -> str:
-    cleaned = _NAME_SANITIZE.sub("_", value).strip("_")
+    cleaned = _NAME_SANITIZE.sub("_", _strip_accents(value)).strip("_")
     return cleaned or fallback
 
 
