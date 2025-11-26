@@ -1,14 +1,24 @@
 """CLI for resume generator."""
 from datetime import datetime
 from pathlib import Path
-from typing import Optional
+from typing import List, Optional
 
 import cyclopts
+from dotenv import load_dotenv
 from pydantic import BaseModel, ConfigDict
 
+from resume_generator.agent import (
+    AgentAction,
+    AgentService,
+    assess_pdf_file,
+    proofread_resume_file,
+    translate_resume_file,
+)
 from resume_generator.generator import ResumeGenerator
 from resume_generator.loader import load_resume_model
 from resume_generator.pdf import render_pdf_from_html_file
+
+load_dotenv()
 
 app = cyclopts.App(
     name="resume-generator",
@@ -86,6 +96,15 @@ class FullManyOptions(CLIBaseModel):
     profile_photo: Optional[Path] = None
     force: bool = False
     file_date: bool = False
+
+
+class AgentOptions(CLIBaseModel):
+    action: AgentAction
+    files: List[Path]
+    target_language: Optional[str] = None
+    source_language: Optional[str] = None
+    output_dir: Path = Path("output/agent")
+    model_name: Optional[str] = None
 
 
 def _generate_html(
@@ -227,6 +246,60 @@ def full_many(options: FullManyOptions) -> None:
     print(f"✓ Processed {len(processed)} resume(s) into {output_dir}:")
     for html_path, pdf_path in processed:
         print(f"  - {html_path.name} | {pdf_path.name}")
+
+
+@app.command()
+def agent(options: AgentOptions) -> None:
+    """Run AI-powered helper actions on explicit files."""
+
+    if not options.files:
+        raise ValueError("Provide at least one file via --options.files.")
+
+    service = AgentService(model_name=options.model_name)
+    output_dir = Path(options.output_dir)
+    resolved_files = [_ensure_exists(path, "Input file") for path in options.files]
+
+    if options.action is AgentAction.TRANSLATE:
+        if not options.target_language:
+            raise ValueError("--options.target-language is required for translation.")
+        for resume_path in resolved_files:
+            destination = translate_resume_file(
+                service,
+                resume_path,
+                target_language=options.target_language,
+                source_language=options.source_language,
+                output_dir=output_dir,
+            )
+            print(f"✓ Translated {resume_path.name} → {destination}")
+    elif options.action is AgentAction.PROOFREAD:
+        for resume_path in resolved_files:
+            feedback, yaml_path = proofread_resume_file(
+                service,
+                resume_path,
+                output_dir=output_dir,
+            )
+            print(f"Feedback for {resume_path.name}:\n{feedback}\nSaved to: {yaml_path}")
+    elif options.action is AgentAction.PDF_ACCESSIBILITY:
+        for pdf_path in resolved_files:
+            report = assess_pdf_file(service, pdf_path)
+            score = report.get("score")
+            verdict = report.get("verdict", "")
+            print(f"{pdf_path.name}: score={score} verdict={verdict}")
+            issues = report.get("issues") or []
+            if issues:
+                print("Issues:")
+                for issue in issues:
+                    print(f"  - {issue}")
+            suggestions = report.get("suggestions") or []
+            if suggestions:
+                print("Suggestions:")
+                for suggestion in suggestions:
+                    print(f"  - {suggestion}")
+            if "raw" in report:
+                print("Raw response:")
+                print(report["raw"])
+    else:
+        raise ValueError(f"Unsupported agent action: {options.action}")
 
 
 @app.default

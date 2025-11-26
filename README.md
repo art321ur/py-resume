@@ -76,9 +76,15 @@ generator.generate_html_file(resume, 'resume.html')
 The resume follows the [JSON Resume](https://jsonresume.org/) schema, adjusted as needed to my needs. Example structure:
 
 ```json
-{
-  "basics": {
-    "name": "Your Name",
+
+Create a local `.env` (already git-ignored) with your AI credentials so the agent command
+can authenticate:
+
+```
+AI_API_KEY=sk-...
+# Optional: override model (defaults to openai:gpt-4o-mini)
+AI_MODEL=openai:gpt-4o-mini
+```
     "label": "Your Title",
     "email": "your.email@example.com",
     "phone": "+1 234 567 8900",
@@ -118,6 +124,20 @@ The resume follows the [JSON Resume](https://jsonresume.org/) schema, adjusted a
     {
       "institution": "University Name",
       "studyType": "Bachelor",
+Use the AI-powered helper (`agent`) for translations, proofreading, or PDF accessibility checks:
+
+```bash
+# Translate structured resumes without ever overwriting the input
+uv run main.py agent --action translate --files input/resume.yaml \
+  --target-language Spanish --output-dir output/i18n
+
+# Proofread and capture hints in YAML alongside console output
+uv run main.py agent --action proofread --files input/resume.yaml
+
+# Score PDF accessibility for automated parsing tools
+uv run main.py agent --action pdf-access --files output/resume.pdf
+```
+
       "area": "Computer Science",
       "startDate": "2016",
       "endDate": "2020"

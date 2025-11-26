@@ -16,6 +16,8 @@ dependencies = [
     "ty>=0.0.1a27",
     "pre-commit>=4.5.0",
     "just>=0.8.165",
+    "pydantic-ai>=1.22.0",
+    "python-dotenv>=1.0.1",
 ]
 
 [tool.ruff]
