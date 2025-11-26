@@ -1,10 +1,10 @@
 set shell := ["powershell.exe", "-Command"]
 
 resume-generate:
-    uv run .\main.py generate --options.input-file .\input\resume.yaml --options.output-file .\output\resume.html --options.profile-photo .\input\profile.jpg --options.force=true
+    uv run .\main.py generate --input-file .\input\resume.yaml --output-file .\output\resume.html --profile-photo .\input\profile.jpg --force
 
 resume-pdf:
-    uv run .\main.py pdf --options.html-file .\output\resume.html --options.output-file .\output\resume.pdf --options.force=true
+    uv run .\main.py pdf --html-file .\output\resume.html --output-file .\output\resume.pdf --force
 
 resume-full:
-    uv run .\main.py full --options.input-file .\input\resume.yaml --options.output-file .\output\resume.html --options.profile-photo .\input\profile.jpg --options.pdf-file .\output\resume.pdf --options.force=true
+    uv run .\main.py full --input-file .\input\resume.yaml --output-file .\output\resume.html --profile-photo .\input\profile.jpg --pdf-file .\output\resume.pdf --force
