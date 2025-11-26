@@ -1,16 +1,16 @@
 """CLI for resume generator."""
+from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
-import cyclopts
-from pydantic import BaseModel, ConfigDict
+from cyclopts import App, Parameter
 
 from resume_generator.generator import ResumeGenerator
 from resume_generator.loader import load_resume_model
 from resume_generator.pdf import render_pdf_from_html_file
 
-app = cyclopts.App(
+app = App(
     name="resume-generator",
     help="Generate resumes as HTML and PDF",
 )
@@ -49,11 +49,9 @@ def _ensure_exists(path: Path, description: str) -> Path:
     return resolved
 
 
-class CLIBaseModel(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-
-
-class GenerateOptions(CLIBaseModel):
+@Parameter(name="*")
+@dataclass
+class GenerateOptions:
     input_file: Path
     output_file: Path = Path("resume.html")
     template_dir: Optional[Path] = None
@@ -62,14 +60,18 @@ class GenerateOptions(CLIBaseModel):
     file_date: bool = False
 
 
-class PdfOptions(CLIBaseModel):
+@Parameter(name="*")
+@dataclass
+class PdfOptions:
     html_file: Path
     output_file: Optional[Path] = None
     force: bool = False
     file_date: bool = False
 
 
-class FullOptions(CLIBaseModel):
+@Parameter(name="*")
+@dataclass
+class FullOptions:
     input_file: Path
     output_file: Path = Path("resume.html")
     template_dir: Optional[Path] = None
@@ -79,7 +81,9 @@ class FullOptions(CLIBaseModel):
     file_date: bool = False
 
 
-class FullManyOptions(CLIBaseModel):
+@Parameter(name="*")
+@dataclass
+class FullManyOptions:
     input_dir: Path
     output_dir: Path
     template_dir: Optional[Path] = None
