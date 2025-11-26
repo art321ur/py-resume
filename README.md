@@ -2,6 +2,8 @@
 Personal project to automatically generate html/pdf resumes from json/yaml data files.
 Generate a beautiful, single-file HTML resume from a JSON resume file using Jinja2 templates.
 
+> **Data storage tip:** keep your personal resume sources outside of this repository (for example in a private folder living next to `py-resume`). The commands below assume an environment variable named `DATA_DIR` (or PowerShell `$env:DATA_DIR`) that points to that private directory containing `input/` and `output/` subfolders.
+
 
 
 ## Installation
@@ -12,44 +14,50 @@ uv install
 
 ## Usage
 
+Clone `py-resume` alongside wherever you keep your private resume data, and export `DATA_DIR` (or `$env:DATA_DIR`) to reference that location while running commands.
+
 ### CLI
 
 Generate HTML resume from JSON or YAML file:
 
 ```bash
-uv run main.py generate input/resume.yaml --output output/resume.html \
-  --profile-photo input/profile.jpg --force
+uv run main.py generate "$DATA_DIR/input/resume.yaml" \
+  --output "$DATA_DIR/output/resume.html" \
+  --profile-photo "$DATA_DIR/input/profile.jpg" \
+  --force
 ```
 
 Or use the default output name:
 
 ```bash
-uv run main.py generate input/resume.json
+uv run main.py generate "$DATA_DIR/input/resume.json"
 ```
 
-> Commands now refuse to overwrite existing files unless you pass `--force`.
-
-To append a timestamp to the generated filenames, add `--file-date`.
+> Commands now refuse to overwrite existing files unless you pass `--force`. Add `--file-date` to append a timestamp.
 
 Convert an already-rendered HTML file to PDF (defaults to the same name with `.pdf`):
 
 ```bash
-uv run main.py pdf output/resume.html --output output/resume.pdf --force
+uv run main.py pdf "$DATA_DIR/output/resume.html" \
+  --output "$DATA_DIR/output/resume.pdf" \
+  --force
 ```
 
 Generate both HTML and PDF with matching names in one go:
 
 ```bash
-uv run main.py full input/resume.yaml --output output/resume.html --force
+uv run main.py full "$DATA_DIR/input/resume.yaml" \
+  --output "$DATA_DIR/output/resume.html" \
+  --force
 ```
 
 Process every JSON/YAML resume in a directory (outputs stored in another directory):
 
 ```bash
-uv run main.py full-many input/ output/ --file-date --force
+uv run main.py full-many "$DATA_DIR/input" "$DATA_DIR/output" --file-date --force
 ```
 
-> `input/` is git-ignored so you can keep private resumes locally without committing them.
+> Keep your resume sources and outputs outside of version control to avoid leaking personal information.
 
 ### Python API
 
@@ -57,18 +65,14 @@ uv run main.py full-many input/ output/ --file-date --force
 from pathlib import Path
 from resume_generator import Resume, ResumeGenerator, load_resume_data
 
-# Load resume data from either JSON or YAML
-data = load_resume_data(Path("input/resume.yaml"))
-
-# Create resume model
+data_dir = Path("../private-resume-data")  # update this path to wherever you store inputs
+data = load_resume_data(data_dir / "input" / "resume.yaml")
 resume = Resume(**data)
 
-# Generate HTML
-generator = ResumeGenerator(profile_photo=Path("input/profile.jpg"))
+generator = ResumeGenerator(profile_photo=data_dir / "input" / "profile.jpg")
 html = generator.generate_html(resume)
 
-# Or save to file
-generator.generate_html_file(resume, 'resume.html')
+generator.generate_html_file(resume, data_dir / "output" / "resume.html")
 ```
 
 ## Resume JSON Format
