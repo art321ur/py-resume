@@ -24,7 +24,10 @@ def _timestamp_suffix() -> str:
 
 
 def _dated_folder_name() -> str:
-    return datetime.now().strftime("%Y%m%d%H%M")
+    now = datetime.now()
+    compact = now.strftime("%Y%m%d%H%M")
+    readable = now.strftime("%Y-%m-%d-%H-%M")
+    return f"{compact} - {readable}"
 
 
 def _with_timestamp(path: Path, timestamp: Optional[str]) -> Path:
