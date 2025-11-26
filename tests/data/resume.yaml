@@ -10,3 +10,4 @@ portfolio:
     description: |
       Built **cool** things with Markdown support.
     url: https://example.com/project
+cvFooter: Custom consent text from YAML.
