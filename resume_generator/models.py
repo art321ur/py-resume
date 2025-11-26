@@ -114,3 +114,4 @@ class Resume(BaseModel):
     publications: Optional[List[dict]] = None
     references: Optional[List[dict]] = None
     portfolio: Optional[List[PortfolioItem]] = None
+    cvFooter: Optional[str] = None

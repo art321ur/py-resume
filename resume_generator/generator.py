@@ -1,6 +1,7 @@
 """HTML generation from resume data."""
 from datetime import datetime
 from pathlib import Path
+from textwrap import dedent
 from typing import Optional
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -8,6 +9,19 @@ from jinja_markdown import MarkdownExtension
 
 from .assets import get_image_as_data_uri, get_placeholder_avatar_data_uri, get_svg_icons
 from .models import Resume
+
+DEFAULT_CV_FOOTER = dedent(
+    """
+    I agree to the processing of personal data provided in this document
+    for realising this and future recruitment processes pursuant to the
+    Personal Data Protection Act of 10 May 2018 (Journal of Laws 2018,
+    item 1000) and in agreement with Regulation (EU) 2016/679 of the
+    European Parliament and of the Council of 27 April 2016 on the
+    protection of natural persons with regard to the processing of
+    personal data and on the free movement of such data, and repealing
+    Directive 95/46/EC (General Data Protection Regulation).
+    """
+).strip()
 
 
 def _parse_date(value: Optional[str]) -> Optional[datetime]:
@@ -124,7 +138,8 @@ class ResumeGenerator:
             resume=resume,
             css_content=css_content,
             icons=icons,
-            picture_url=picture_url
+            picture_url=picture_url,
+            cv_footer_text=resume.cvFooter or DEFAULT_CV_FOOTER,
         )
 
         return html

@@ -127,7 +127,7 @@ def generate(options: GenerateOptions) -> None:
         force=options.force,
         timestamp=timestamp,
     )
-    print(f"✓ Resume generated successfully: {output_path}")
+    print(f"Resume generated successfully: {output_path}")
 
 
 @app.command()
@@ -144,7 +144,7 @@ def pdf(options: PdfOptions) -> None:
     )
 
     render_pdf_from_html_file(html_path, target_pdf)
-    print(f"✓ PDF created successfully: {target_pdf}")
+    print(f"PDF created successfully: {target_pdf}")
 
 
 @app.command()
@@ -169,8 +169,8 @@ def full(options: FullOptions) -> None:
     )
 
     render_pdf_from_html_file(html_path, target_pdf)
-    print(f"✓ Resume generated: {html_path}")
-    print(f"✓ PDF generated: {target_pdf}")
+    print(f"Resume generated: {html_path}")
+    print(f"PDF generated: {target_pdf}")
 
 
 @app.command(name="full-many")
@@ -228,7 +228,7 @@ def full_many(options: FullManyOptions) -> None:
         render_pdf_from_html_file(html_path, pdf_path)
         processed.append((html_path, pdf_path))
 
-    print(f"✓ Processed {len(processed)} resume(s) into {output_dir}:")
+    print(f"Processed {len(processed)} resume(s) into {output_dir}:")
     for html_path, pdf_path in processed:
         print(f"  - {html_path.name} | {pdf_path.name}")
 

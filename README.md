@@ -147,9 +147,12 @@ The resume follows the [JSON Resume](https://jsonresume.org/) schema, adjusted a
     {
       "name": "Software Development"
     }
-  ]
+  ],
+  "cvFooter": "Optional consent statement shown at the bottom of the resume."
 }
 ```
+
+Add an optional `cvFooter` string if you want to override the default GDPR consent text rendered at the bottom of the generated resume. When omitted, the classic consent block remains unchanged.
 
 ## Development
 
