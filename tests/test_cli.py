@@ -97,8 +97,8 @@ def test_full_many_processes_directory(
     monkeypatch.setattr(main, "render_pdf_from_html_file", fake_render)
 
     timestamps = iter([
-        "202501010303 - 2025-01-01-03-03",
-        "202501010404 - 2025-01-01-04-04",
+        "2025-01-01-03-03",
+        "2025-01-01-04-04",
     ])
     monkeypatch.setattr(main, "_dated_folder_name", lambda: next(timestamps))
 
@@ -121,12 +121,12 @@ def test_full_many_processes_directory(
     )
 
     assert html_outputs == [
-        "sample/202501010303 - 2025-01-01-03-03/Sample_Person_CV.html",
-        "sample/202501010404 - 2025-01-01-04-04/Sample_Person_CV.html",
+        "sample/2025-01-01-03-03/Sample_Person_CV.html",
+        "sample/2025-01-01-04-04/Sample_Person_CV.html",
     ]
     assert pdf_outputs == [
-        "sample/202501010303 - 2025-01-01-03-03/Sample_Person_CV.pdf",
-        "sample/202501010404 - 2025-01-01-04-04/Sample_Person_CV.pdf",
+        "sample/2025-01-01-03-03/Sample_Person_CV.pdf",
+        "sample/2025-01-01-04-04/Sample_Person_CV.pdf",
     ]
 
 
