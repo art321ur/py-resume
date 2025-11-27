@@ -2,6 +2,10 @@
 Personal project to automatically generate html/pdf resumes from json/yaml data files.
 Generate a beautiful, single-file HTML resume from a JSON resume file using Jinja2 templates.
 
+> [!CAUTION]
+> This project was created for personal use — the code, features, and API may change without notice. If you are looking for a production-ready solution to generate your résumé from YAML, I recommend the https://github.com/rendercv/rendercv
+ project.
+
 > **Data storage tip:** keep your personal resume sources outside of this repository (for example in a private folder living next to `py-resume`). The commands below assume an environment variable named `DATA_DIR` (or PowerShell `$env:DATA_DIR`) that points to that private directory containing `input/` and `output/` subfolders.
 
 
